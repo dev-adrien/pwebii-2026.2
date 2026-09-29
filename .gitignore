@@ -1,0 +1,15 @@
+!.gitkeep
+
+# IDEs e editores
+.vscode/
+.idea/
+*.cbp
+*.depend
+*.layout
+
+# Arquivos de sistema e temporarios
+.DS_Store
+Thumbs.db
+*~
+*.swp
+*.tmp
