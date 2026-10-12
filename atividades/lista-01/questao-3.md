@@ -1,111 +1,167 @@
-# Lista de Exercícios - Questão 2: Lógica de Programação Básica em JavaScript
+# Lista de Exercícios - Questão 3: Lógica, Estruturas e Funções em JavaScript
 
 ---
 
-### a) Conversão de Real (R$) para Dólar Americano (US$)
+### a) Operações Básicas
 
-> **Enunciado:** Escreva um programa que leia um valor em R$ (reais) e a cotação atual do dólar americano, após isso, converta o valor de entrada para US$ (dólar americano) e exiba o resultado.
-
-```javascript
-let valor = Number(prompt("Digite o valor em reais (R$): "));
-let cotacao = Number(prompt("Digite a cotação atual do dólar: "));
-
-if (valor <= 0 || cotacao <= 0 || isNaN(valor) || isNaN(cotacao)) {
-    alert("Valores inválidos. Digite valores numéricos positivos.");
-} else {
-    let valorDolar = valor / cotacao;
-    console.log(`Valor em reais: R$ ${valor.toFixed(2)}`);
-    console.log(`Cotação informada: R$ ${cotacao.toFixed(2)}`);
-    console.log(`Valor convertido: US$ ${valorDolar.toFixed(2)}`);
-}
-```
-
----
-
-### b) Perímetro da Circunferência
-
-> **Enunciado:** Escreva um programa que calcule o perímetro (circunferência) de um círculo a partir do valor do raio.
+> **Enunciado:** Escreva uma função que receba dois números e um caractere como argumentos. O caractere recebido informa que tipo de operação deve ser realizada. Por exemplo, ao receber o caractere `+`, a função deve calcular a soma dos números passados como argumento e retornar o resultado. Use `+` para soma, `-` para subtração, `/` para divisão e `*` para multiplicação.
 
 ```javascript
-let r = Number(prompt("Digite o valor do raio do círculo: "));
-
-if (r <= 0 || isNaN(r)) {
-    alert("Valor inválido. Digite um raio numérico positivo.");
-} else {
-    let perimetro = 2 * Math.PI * r;
-    console.log(`Raio: ${r}`);
-    console.log(`Perímetro do círculo: ${perimetro.toFixed(2)}`);
-}
-```
-
----
-
-### c) Cálculo de Média Ponderada e Situação do Aluno (IFCE)
-
-> **Enunciado:** Escreva um programa para calcular a nota final de um aluno de curso de graduação do IFCE, sabendo que o semestre letivo é dividido em 2 etapas (N1 e N2) e a nota final é obtida a partir de uma média ponderada das notas obtidas nas 2 etapas. Os pesos para cada etapa são os seguintes: N1, peso 2; N2, peso 3. O programa deve solicitar ao aluno as notas de cada etapa e, ao final, o programa deve exibir uma mensagem informando qual a sua nota final e se ele está aprovado ou reprovado, sabendo que a nota mínima para aprovação é 7,0.
-
-```javascript
-let n1 = Number(prompt("Digite a primeira nota (N1 - Peso 2): "));
-let n2 = Number(prompt("Digite a segunda nota (N2 - Peso 3): "));
-const NOTA_MINIMA = 7.0;
-
-if (isNaN(n1) || isNaN(n2) || n1 < 0 || n1 > 10 || n2 < 0 || n2 > 10) {
-    alert("Notas inválidas. As notas devem estar no intervalo de 0.0 a 10.0.");
-} else {
-    let media = ((n1 * 2) + (n2 * 3)) / 5;
-    console.log(`Nota N1: ${n1.toFixed(1)}`);
-    console.log(`Nota N2: ${n2.toFixed(1)}`);
-    console.log(`Nota Final (Média Ponderada): ${media.toFixed(2)}`);
-
-    if (media >= NOTA_MINIMA) {
-        console.log("Situação: Aprovado.");
-    } else {
-        console.log("Situação: Reprovado.");
+function calculadora(n1, n2, operacao) {
+    switch (operacao) {
+        case "+":
+            return n1 + n2;
+        case "-":
+            return n1 - n2;
+        case "*":
+            return n1 * n2;
+        case "/":
+            if (n2 === 0) {
+                return "Erro: divisão por zero";
+            }
+            return n1 / n2;
+        default:
+            return "Erro: operação inválida";
     }
 }
+
+let n1 = Number(prompt("Digite o primeiro número: "));
+let n2 = Number(prompt("Digite o segundo número: "));
+let operacao = prompt("Digite a operação (+, -, *, /): ");
+
+console.log(`Resultado: ${calculadora(n1, n2, operacao)}`);
 ```
 
 ---
 
-### d) Soma de Números Primos Entre $n$ Entradas
+### b) Produtório com Quantidade Variável de Argumentos
 
-> **Enunciado:** Dados n números inteiros positivos, calcule e exiba a soma dos que são primos.
+> **Enunciado:** Escreva uma função que receba uma quantidade não específica (aleatória) de números como argumentos e retorne o produtório dos números passados.
 
 ```javascript
-function ehPrimo(numero) {
-    if (numero <= 1) return false;
-    for (let divisor = 2; divisor * divisor <= numero; divisor++) {
-        if (numero % divisor === 0) {
-            return false;
+function produtorio() {
+    let numbers = [];
+    let cont = 1;
+    while (true) {
+        let n = Number(prompt(`Digite o ${cont}º número (ou um valor não numérico para encerrar):`));
+        if (isNaN(n)) {
+            break;
+        }
+        numbers.push(n);
+        cont++;
+    }
+
+    let total = 1;
+
+    for (let i = 0; i < numbers.length; i++) {
+        total *= numbers[i];
+        console.log(`${numbers[i]}`);
+    }
+
+    console.log(`Resultado: ${total}`);
+}
+
+produtorio();
+```
+
+---
+
+### c) Fatorial com Recursividade
+
+> **Enunciado:** Implemente uma função que receba um número e retorne seu fatorial. Use recursividade.
+
+```javascript
+function fatorial(n) {
+    if (n < 0) {
+        return "Erro: fatorial de número negativo não é definido";
+    }
+    let resultado = 1;
+    for (let i = 2; i <= n; i++) {
+        resultado *= i;
+    }
+    return resultado;
+}
+
+let numero = Number(prompt("Digite um número para calcular o fatorial: "));
+console.log(`Fatorial de ${numero}: ${fatorial(numero)}`);
+```
+
+---
+
+### d) Filtragem de Números Ímpares
+
+> **Enunciado:** Implemente uma função que receba um array de números e retorne um outro array contendo somente os números ímpares encontrados.
+
+```javascript
+let numeros = [1, 4, 23, 24, 5, 9, 30, 1000];
+
+function numerosImpares(numeros) {
+    let impares = [];
+    for (let i = 0; i < numeros.length; i++) {
+        if (numeros[i] % 2 !== 0) {
+            impares.push(numeros[i]);
         }
     }
-    return true;
+    return impares;
 }
 
-let quantidade = Number(prompt("Quantos números você vai digitar? "));
+console.log(numerosImpares(numeros));
+```
 
-while (isNaN(quantidade) || quantidade <= 0) {
-    alert("Quantidade inválida. Digite um número inteiro positivo.");
-    quantidade = Number(prompt("Quantos números você vai digitar? "));
+---
+
+### e) Cálculo de Total com Desconto Opcional
+
+> **Enunciado:** Suponha que você está implementando um sistema de e-commerce e precise calcular o valor total de um produto no carrinho do cliente, aplicando ou não um desconto. Nesse contexto, escreva uma função que receba o valor unitário do produto, a quantidade solicitada e o desconto a ser aplicado e retorne o valor total da compra. Ao chamar a função, podemos passar ou não o desconto a ser aplicado. Caso nenhum valor de desconto seja passado, o padrão deve ser 0 (sem desconto).
+
+```javascript
+function checkout(valor, qtn, desc) {
+    let total = valor * qtn;
+    let desconto = total * (desc / 100);
+    return total - desconto;
 }
 
-let soma = 0;
-let primosEncontrados = [];
+let valor = Number(prompt("Digite o valor do produto: "));
+let qtn = Number(prompt("Digite a quantidade do produto: "));
+let desc = Number(prompt("Digite o desconto em porcentagem: "));
 
-for (let i = 1; i <= quantidade; i++) {
-    let num = Number(prompt(`Digite o ${i}º número inteiro positivo:`));
+console.log(`Total a pagar: R$ ${checkout(valor, qtn, desc).toFixed(2)}`);
+```
 
-    while (isNaN(num) || num <= 0) {
-        alert("Número inválido. Digite um valor positivo.");
-        num = Number(prompt(`Digite o ${i}º número novamente:`));
+---
+
+### f) Objeto de Conta Bancária
+
+> **Enunciado:** Crie um objeto que represente uma conta bancária, com as propriedades saldo e número da conta. O objeto deve ter métodos para depositar, sacar e informar saldo. O método depositar deve receber o valor a ser adicionado ao saldo; o método sacar deve receber o valor a ser debitado do saldo (caso haja saldo disponível); o método informar saldo deve exibir uma mensagem informando ao usuário o seu saldo atual.
+
+```javascript
+let conta = {
+    numeroConta: "123234",
+    saldo: 1000.0,
+    depositar: function(valor) {
+        this.saldo += valor;
+        console.log(`Depósito de R$ ${valor.toFixed(2)} realizado com sucesso.`);
+    },
+    sacar: function(valor) {
+        if (this.saldo >= valor) {
+            this.saldo -= valor;
+            console.log(`Saque de R$ ${valor.toFixed(2)} realizado com sucesso.`);
+        } else {
+            console.log("Saldo insuficiente");
+        }
+    },
+    informar: function() {
+        console.log(`Número da conta: ${this.numeroConta}, Saldo: R$ ${this.saldo.toFixed(2)}`);
     }
+};
 
-    if (ehPrimo(num)) {
-        soma += num;
-        primosEncontrados.push(num);
-    }
-}
+conta.informar();
+conta.depositar(500);
+conta.informar();
 
-console.log(`Números primos identificados: ${primosEncontrados.join(", ") || "Nenhum"}`);
-console.log(`Soma dos números primos: ${soma}`);
+conta.sacar(200);
+conta.informar();
+
+conta.sacar(2000);
+conta.informar();
 ```
